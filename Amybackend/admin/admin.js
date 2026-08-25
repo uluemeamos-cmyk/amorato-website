@@ -12,6 +12,10 @@
   const statusMsg = document.getElementById("status-msg");
   const refreshBtn = document.getElementById("refresh-btn");
   const rowTemplate = document.getElementById("order-row-template");
+  const enquiryRowTemplate = document.getElementById("enquiry-row-template");
+  const enquiriesList = document.getElementById("enquiries-list");
+  const enquiryCount = document.getElementById("enquiry-count");
+  const refreshEnquiriesBtn = document.getElementById("refresh-enquiries-btn");
 
   let carriers = {};
 
@@ -134,13 +138,54 @@
     localStorage.setItem(KEY_STORAGE, keyInput.value);
     await loadCarriers();
     await loadOrders();
+    await loadEnquiries();
   });
   refreshBtn.addEventListener("click", loadOrders);
+  refreshEnquiriesBtn.addEventListener("click", loadEnquiries);
+
+  // Tab switching
+  document.querySelectorAll(".tab-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".tab-btn").forEach((b) => b.classList.remove("is-active"));
+      document.querySelectorAll(".tab-panel").forEach((p) => p.classList.remove("is-active"));
+      btn.classList.add("is-active");
+      document.getElementById(`tab-${btn.dataset.tab}`).classList.add("is-active");
+    });
+  });
+
+  function renderEnquiry(entry) {
+    const node = enquiryRowTemplate.content.cloneNode(true);
+    node.querySelector(".enquiry-card__type").textContent = (entry.enquiryType || "general").replace(/-/g, " ");
+    node.querySelector(".enquiry-card__date").textContent = new Date(entry.receivedAt).toLocaleString();
+    node.querySelector(".enquiry-card__name").textContent = entry.name || "(no name)";
+    node.querySelector(".enquiry-card__email").textContent = entry.email || "";
+    node.querySelector(".enquiry-card__message").textContent = entry.message || "(no message)";
+    return node;
+  }
+
+  async function loadEnquiries() {
+    try {
+      const res = await fetch(`${API_BASE}/api/enquiries`, { headers: adminHeaders() });
+      if (!res.ok) throw new Error("Could not load enquiries.");
+      const enquiries = await res.json();
+
+      enquiriesList.innerHTML = "";
+      if (!enquiries.length) {
+        enquiriesList.innerHTML = '<p style="color:var(--cream-dim)">No enquiries yet. They\'ll show up here the moment someone submits the Cellar Door form — whether or not email is set up.</p>';
+      } else {
+        enquiries.forEach((entry) => enquiriesList.appendChild(renderEnquiry(entry)));
+      }
+      enquiryCount.textContent = `${enquiries.length} enquir${enquiries.length === 1 ? "y" : "ies"}`;
+    } catch (err) {
+      enquiriesList.innerHTML = `<p style="color:var(--cream-dim)">${err.message}</p>`;
+    }
+  }
 
   // Restore a previously entered key so you don't retype it every visit.
   const savedKey = localStorage.getItem(KEY_STORAGE);
   if (savedKey) {
     keyInput.value = savedKey;
     loadCarriers().then(loadOrders);
+    loadEnquiries();
   }
 })();
