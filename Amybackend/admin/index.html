@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Order Admin — The House of Amorato</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=EB+Garamond&family=Cinzel:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <h1>The House of Amorato — Order Admin</h1>
+  <div class="topbar__key">
+    <input type="password" id="admin-key" placeholder="Admin key">
+    <button id="connect-btn" class="btn">Connect</button>
+  </div>
+</header>
+
+<main id="app" hidden>
+  <div class="toolbar">
+    <span id="order-count"></span>
+    <button id="refresh-btn" class="btn btn--ghost">Refresh</button>
+  </div>
+  <div id="orders-list"></div>
+</main>
+
+<p id="status-msg" class="status-msg"></p>
+
+<template id="order-row-template">
+  <article class="order-card">
+    <div class="order-card__head">
+      <div>
+        <strong class="order-card__invoice"></strong>
+        <span class="order-card__date"></span>
+      </div>
+      <a class="order-card__pdf btn btn--ghost btn--small" target="_blank">Invoice PDF</a>
+    </div>
+    <div class="order-card__body">
+      <div class="order-card__customer">
+        <p class="order-card__name"></p>
+        <p class="order-card__email"></p>
+        <p class="order-card__address"></p>
+      </div>
+      <div class="order-card__items"></div>
+      <div class="order-card__total"></div>
+    </div>
+    <div class="order-card__manage">
+      <label>Status
+        <select class="field-status">
+          <option value="pending">Pending Payment</option>
+          <option value="paid">Paid</option>
+          <option value="processing">Processing</option>
+          <option value="shipped">Shipped</option>
+          <option value="delivered">Delivered</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+      </label>
+      <label>Carrier
+        <select class="field-carrier"></select>
+      </label>
+      <label>Tracking number
+        <input type="text" class="field-tracking-number" placeholder="e.g. CG123456789">
+      </label>
+      <label>Manual tracking link <span class="hint">(overrides carrier link)</span>
+        <input type="text" class="field-tracking-manual" placeholder="https://...">
+      </label>
+      <label class="checkbox-label">
+        <input type="checkbox" class="field-notify">
+        Email customer with tracking info
+      </label>
+      <button class="btn btn--gold btn--small field-save">Save</button>
+      <span class="save-status"></span>
+    </div>
+  </article>
+</template>
+
+<script src="admin.js"></script>
+</body>
+</html>

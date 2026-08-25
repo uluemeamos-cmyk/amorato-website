@@ -1,0 +1,57 @@
+{
+  "amorato-single": {
+    "name": "Kohwo Shiraz Blend — Bottle (750ml)",
+    "unitAmount": 22000,
+    "description": "2022 Vintage Shiraz Blend, Stellenbosch. 14% ABV. Named for blessing."
+  },
+  "amorato-case": {
+    "name": "Kohwo Shiraz Blend — Case of 12",
+    "unitAmount": 240000,
+    "description": "2022 Vintage Shiraz Blend, Stellenbosch. 12 x 750ml bottles. Named for blessing."
+  },
+  "wine-mahadi": {
+    "name": "Mahadi Chardonnay",
+    "unitAmount": 21000,
+    "description": "Amorato Chardonnay, Stellenbosch. Named for gratitude."
+  },
+  "wine-ufuoma": {
+    "name": "Ufuoma Sauvignon Blanc",
+    "unitAmount": 21000,
+    "description": "Amorato Sauvignon Blanc, Stellenbosch. Named for peace."
+  },
+  "wine-kigho": {
+    "name": "Kigho Rosé",
+    "unitAmount": 22000,
+    "description": "Amorato Rosé, Stellenbosch. Named for wealth."
+  },
+  "wine-kundu": {
+    "name": "Kundu Non-Alcoholic Shiraz",
+    "unitAmount": 19000,
+    "description": "Amorato non-alcoholic Shiraz, Stellenbosch. Named for strength."
+  },
+  "wine-cuvee": {
+    "name": "Amorato Cuvée Impériale",
+    "unitAmount": 32000,
+    "description": "Méthode Traditionnelle sparkling wine, Stellenbosch. 12.5% ABV. Made for toasts."
+  },
+  "merch-glass": {
+    "name": "Bespoke Amorato Wine Glass (pair)",
+    "unitAmount": 35000,
+    "description": "Gold crest etched crystal wine glasses, sold in pairs."
+  },
+  "merch-tee": {
+    "name": "Amorato Crest T-Shirt",
+    "unitAmount": 45000,
+    "description": "Black t-shirt, gold crest print."
+  },
+  "merch-hoodie": {
+    "name": "Amorato Crest Hoodie",
+    "unitAmount": 85000,
+    "description": "Black hoodie, gold crest embroidery."
+  },
+  "merch-cap": {
+    "name": "Amorato Crest Cap",
+    "unitAmount": 32000,
+    "description": "Black cap, gold embroidered crest."
+  }
+}
