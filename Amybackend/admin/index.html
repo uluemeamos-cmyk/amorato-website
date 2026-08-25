@@ -10,7 +10,7 @@
 <body>
 
 <header class="topbar">
-  <h1>The House of Amorato — Order Admin</h1>
+  <h1>The House of Amorato — Admin</h1>
   <div class="topbar__key">
     <input type="password" id="admin-key" placeholder="Admin key">
     <button id="connect-btn" class="btn">Connect</button>
@@ -18,14 +18,41 @@
 </header>
 
 <main id="app" hidden>
-  <div class="toolbar">
-    <span id="order-count"></span>
-    <button id="refresh-btn" class="btn btn--ghost">Refresh</button>
-  </div>
-  <div id="orders-list"></div>
+  <nav class="tabs">
+    <button class="tab-btn is-active" data-tab="orders">Orders</button>
+    <button class="tab-btn" data-tab="enquiries">Enquiries</button>
+  </nav>
+
+  <section id="tab-orders" class="tab-panel is-active">
+    <div class="toolbar">
+      <span id="order-count"></span>
+      <button id="refresh-btn" class="btn btn--ghost">Refresh</button>
+    </div>
+    <div id="orders-list"></div>
+  </section>
+
+  <section id="tab-enquiries" class="tab-panel">
+    <div class="toolbar">
+      <span id="enquiry-count"></span>
+      <button id="refresh-enquiries-btn" class="btn btn--ghost">Refresh</button>
+    </div>
+    <div id="enquiries-list"></div>
+  </section>
 </main>
 
 <p id="status-msg" class="status-msg"></p>
+
+<template id="enquiry-row-template">
+  <article class="enquiry-card">
+    <div class="enquiry-card__head">
+      <strong class="enquiry-card__type"></strong>
+      <span class="enquiry-card__date"></span>
+    </div>
+    <p class="enquiry-card__name"></p>
+    <p class="enquiry-card__email"></p>
+    <p class="enquiry-card__message"></p>
+  </article>
+</template>
 
 <template id="order-row-template">
   <article class="order-card">
