@@ -10,6 +10,7 @@ const productsRoute = require("./routes/products");
 const videosRoute = require("./routes/videos");
 const ordersRoute = require("./routes/orders");
 const invoiceRoute = require("./routes/invoice");
+const enquiriesRoute = require("./routes/enquiries");
 
 const app = express();
 
@@ -59,6 +60,7 @@ app.use("/api/products", productsRoute);
 app.use("/api/videos", videosRoute);
 app.use("/api/orders", ordersRoute);
 app.use("/api/orders", invoiceRoute); // adds GET /api/orders/:id/invoice
+app.use("/api/enquiries", enquiriesRoute);
 
 // Simple admin dashboard — order list, tracking, invoices.
 // Not linked from the public site; reachable directly at /admin.
