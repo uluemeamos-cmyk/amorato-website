@@ -13,7 +13,19 @@ const invoiceRoute = require("./routes/invoice");
 
 const app = express();
 
-const extraOrigins = (process.env.EXTRA_ALLOWED_ORIGINS || "") .split(",") .map((o) => o.trim()) .filter(Boolean); app.use( cors({ origin(origin, callback) { const isLocal = !origin || origin === "null" || /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin); const isAllowed = isLocal || origin === process.env.FRONTEND_URL || extraOrigins.includes(origin); callback(null, isAllowed); } }) );
+// Render (and most hosts) sit behind a proxy that terminates HTTPS and
+// forwards to Node over plain HTTP. Without this, req.protocol reports
+// "http" even on a real https:// site — which would make PayFast's
+// notify_url wrong. This tells Express to trust the proxy's headers.
+app.set("trust proxy", 1);
+
+// CORS: always allow local development regardless of FRONTEND_URL — that
+// was what blocked things before. This covers three cases: no Origin
+// header at all, the literal string "null" (what browsers actually send
+// as the Origin for file:// pages — NOT a missing header, an easy thing
+// to miss), and any localhost/127.0.0.1 port. In production, only
+// FRONTEND_URL (and any extra origins in EXTRA_ALLOWED_ORIGINS,
+// comma-separated) are allowed.
 const extraOrigins = (process.env.EXTRA_ALLOWED_ORIGINS || "")
   .split(",")
   .map((o) => o.trim())
@@ -22,7 +34,8 @@ const extraOrigins = (process.env.EXTRA_ALLOWED_ORIGINS || "")
 app.use(
   cors({
     origin(origin, callback) {
-      const isLocal = !origin || /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin);
+      const isLocal =
+        !origin || origin === "null" || /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin);
       const isAllowed = isLocal || origin === process.env.FRONTEND_URL || extraOrigins.includes(origin);
       callback(null, isAllowed);
     }
