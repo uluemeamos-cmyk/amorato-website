@@ -13,11 +13,7 @@ const invoiceRoute = require("./routes/invoice");
 
 const app = express();
 
-// CORS: always allow local development (any localhost/127.0.0.1 port,
-// and file:// which sends no origin at all) regardless of FRONTEND_URL —
-// that's what was blocking requests before. In production, only
-// FRONTEND_URL (and any extra origins in EXTRA_ALLOWED_ORIGINS,
-// comma-separated) are allowed.
+const extraOrigins = (process.env.EXTRA_ALLOWED_ORIGINS || "") .split(",") .map((o) => o.trim()) .filter(Boolean); app.use( cors({ origin(origin, callback) { const isLocal = !origin || origin === "null" || /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin); const isAllowed = isLocal || origin === process.env.FRONTEND_URL || extraOrigins.includes(origin); callback(null, isAllowed); } }) );
 const extraOrigins = (process.env.EXTRA_ALLOWED_ORIGINS || "")
   .split(",")
   .map((o) => o.trim())
